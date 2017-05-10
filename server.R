@@ -1,26 +1,31 @@
 #
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
+# This is the server logic of a Shiny web app for playing with normal curves.
 #
 
 library(shiny)
 library(ggplot2)
 
+redraw <- function(minx, maxx, mu, sd) {
+  errorText <- "Minimum x-axis value must be smaller than maximum x-axis value."
+  if (maxx - minx > .1) {
+    xvalues <- seq(minx, maxx, .1)
+    yvalues <- dnorm(xvalues, mu, sd)
+    g <- ggplot(data=data.frame(xvalues, yvalues), aes(x=xvalues, y=yvalues))
+    g + geom_line() + labs(x="X", y="f(X)")
+  } else {
+    ggplot() + annotate("text", x=4, y=25, size=6, label=errorText)
+  }
+}
+
 shinyServer(function(input, output) {
-  minx <- -6
-  maxx <- 6
-  x <- seq(minx, maxx, .1)
-  y <- reactive({dnorm(x, input$mu, input$sd)})
-  brushed_data <- reactive({brushedPoints(data.frame(a=x, b=y()), input$brush1)})
+  doc <- readLines("Data/documentation.txt")
+  doc2 <- paste(doc, collapse="\n")
   output$distPlot <- renderPlot({
-    g <- ggplot(data=data.frame(a=x, b=y()), aes(x=a, y=b))
-    g + geom_line()
+    if (is.null(input$brush1)) {
+      redraw(input$range[1], input$range[2], input$mu, input$sd)
+    } else {
+      redraw(input$brush1$xmin, input$brush1$xmax, input$mu, input$sd)
+    }
   })
-  
-  output$xValue <- renderText({brushed_data()[[1]][1]})
-  output$yValue <- renderText({brushed_data()[[2]][1]})
+  output$xValue <- renderText(doc2)
 })

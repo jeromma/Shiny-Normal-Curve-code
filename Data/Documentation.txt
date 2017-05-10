@@ -1,0 +1,38 @@
+This Shiny app allows you to play around with a
+normal curve in the following ways:
+
+ o Change the mean of the displayed distribution
+   to any integer between -3 and 3 inclusive
+
+ o Change the standard deviation of the displayed
+   distribution between .5 and 6 in increments of .05
+
+ o Choose the mininum and maximum x values to show
+   on the plot
+
+ o Zoom in on a portion of the plot by brushing
+
+The main window has two tabs.  The tab labeled
+"Plot" displays the normal curve as you play around
+with it.  The tab labeled "Documentation" contains
+the text you are reading.
+
+The mean and the standard deviation of the displayed
+distribution can be changed by use of sliders labeled
+"Mean:" and "Standard deviation:".
+
+The minimum and maximum x values to show on the plot
+can be chosen by use of the slider labeled "Input range:".
+If the minimum and maximum x values are set equal to each
+other, an error message will be displayed.
+
+Brushing an area of the display will zoom in using the
+minimum and maximum x values of the brushed area.  The
+values for the normal curve at these x values will be
+displayed.  An odd byproduct of this approach is brushing
+a blank area of the display will zoom in on the part of
+the normal curve corresponding to the chosen x values
+--not the blank area itself.
+
+To stop zooming and go back to the full normal curve,
+click anywhere outside of the brushed area.
