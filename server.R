@@ -2,8 +2,10 @@
 # This is the server logic of a Shiny web app for playing with normal curves.
 #
 
+options(warn=-1)
 library(shiny)
 library(ggplot2)
+options(warn=0)
 
 redraw <- function(minx, maxx, mu, sd) {
   errorText <- "Minimum x-axis value must be smaller than maximum x-axis value."
