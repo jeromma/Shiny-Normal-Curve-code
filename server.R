@@ -20,7 +20,7 @@ redraw <- function(minx, maxx, mu, sd) {
 }
 
 shinyServer(function(input, output) {
-  doc <- readLines("Data/documentation.txt")
+  doc <- readLines("Data/Documentation.txt")
   doc2 <- paste(doc, collapse="\n")
   output$distPlot <- renderPlot({
     if (is.null(input$brush1)) {
